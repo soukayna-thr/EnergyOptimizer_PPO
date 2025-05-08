@@ -41,8 +41,8 @@ L'application comprend:
 
 1. Clonez ce dépôt:
 ```bash
-git clone https://github.com/votreusername/optibatiment.git
-cd optibatiment
+git clone https://github.com/soukayna-thr/EnergyOptimizer_PPO
+cd EnergyOptimizer_PPO
 ```
 
 2. Installez les dépendances:
