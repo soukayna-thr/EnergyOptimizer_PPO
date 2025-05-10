@@ -691,8 +691,7 @@ elif df is not None:
         Observez comment les températures et niveaux d'éclairage s'ajustent en fonction des actions de l'agent
         et des changements d'occupation.
         """)
-        
-        # Pour la démo, on va simuler des actions HVAC et éclairage
+       # Pour la démo, on va simuler des actions HVAC et éclairage
         if 'hvac_action' not in optimized_df.columns:
             optimized_df['hvac_action'] = optimized_df.apply(lambda row: np.random.uniform(-0.2, 0.2), axis=1)
         if 'lighting_action' not in optimized_df.columns:
@@ -707,9 +706,63 @@ elif df is not None:
         # Version améliorée pour répondre aux besoins du projet
         col1, col2 = st.columns([2, 1])
         
+        # Création d'un bâtiment modifié basé sur les actions de l'agent PPO
+        modified_building = building_model.copy()
+        
+        # Mettre à jour le bâtiment avec les dernières valeurs optimisées
+        if len(optimized_df) > 0:
+            # Obtenir les dernières valeurs optimisées
+            last_row = optimized_df.iloc[-1]
+            
+            # Calculer nouvelles températures et niveaux d'éclairage en fonction des actions
+            temps = []
+            lights = []
+            occs = []
+            
+            # Déterminer si nous avons des données d'occupation
+            has_occupancy_data = 'occupancy' in last_row and isinstance(last_row['occupancy'], (list, np.ndarray))
+            
+            for room_id, room in enumerate(modified_building['rooms']):
+                # Facteur variable selon l'étage
+                floor_factor = 1 + 0.2 * room['floor']
+                
+                # Température affectée par l'action HVAC si disponible
+                if 'hvac_action' in last_row:
+                    base_temp = 22 + (room_id % 5 - 2)
+                    temp_change = last_row['hvac_action'] * floor_factor * 3
+                    temp = base_temp + temp_change
+                    temps.append(min(28, max(18, temp)))
+                else:
+                    temps.append(room['temperature'])  # Utiliser valeur existante
+                
+                # Éclairage affecté par l'action d'éclairage si disponible
+                if 'lighting_action' in last_row:
+                    base_light = 500 + (room_id % 5 - 2) * 20
+                    light_change = last_row['lighting_action'] * 200 * floor_factor
+                    light = base_light + light_change
+                    lights.append(min(700, max(300, light)))
+                else:
+                    lights.append(room['light_level'])  # Utiliser valeur existante
+                
+                # Occupation: utiliser données réelles si disponibles
+                if has_occupancy_data and len(last_row['occupancy']) > room_id:
+                    occ = last_row['occupancy'][room_id]
+                else:
+                    # Simuler occupation variable
+                    hour_est = datetime.now().hour
+                    is_working_hours = (hour_est >= 8 and hour_est <= 18)
+                    is_weekend = datetime.now().weekday() >= 5
+                    prob_occupied = 0.7 if (is_working_hours and not is_weekend) else 0.1
+                    occ = 1 if (np.random.random() < prob_occupied) else 0
+                occs.append(occ)
+            
+            # Mettre à jour l'état du bâtiment avec ces nouvelles valeurs
+            from building_3d_vis import update_building_state
+            modified_building = update_building_state(modified_building, temps, lights, occs)
+            
         with col1:
-            # Visualisation 3D au centre avec contrôles avancés
-            fig = plot_building_3d(building_model, show_controls=True)
+            # Visualisation 3D au centre avec contrôles avancés - utiliser le bâtiment modifié
+            fig = plot_building_3d(modified_building, show_controls=True)
             
             # Ajout d'un titre explicatif sur le graphique
             fig.update_layout(
@@ -739,17 +792,69 @@ elif df is not None:
             # Statistiques et informations sur les décisions de l'agent PPO
             st.markdown("#### Statistiques du bâtiment")
             
-            # Température et éclairage moyens
-            temp_avg = np.mean([room['temperature'] for room in building_model['rooms']])
-            light_avg = np.mean([room['light_level'] for room in building_model['rooms']])
+            # Création d'un bâtiment modifié basé sur les actions de l'agent PPO
+            modified_building = building_model.copy()
             
-            # Comptage des pièces occupées
-            occupied_count = sum([1 for room in building_model['rooms'] if room.get('occupied', 0) == 1])
+            # Mettre à jour le bâtiment avec les dernières valeurs optimisées
+            if len(optimized_df) > 0:
+                # Obtenir les dernières valeurs optimisées
+                last_row = optimized_df.iloc[-1]
+                
+                # Calculer nouvelles températures et niveaux d'éclairage en fonction des actions
+                temps = []
+                lights = []
+                occs = []
+                
+                # Déterminer si nous avons des données d'occupation
+                has_occupancy_data = 'occupancy' in last_row and isinstance(last_row['occupancy'], (list, np.ndarray))
+                
+                for room_id, room in enumerate(modified_building['rooms']):
+                    # Facteur variable selon l'étage
+                    floor_factor = 1 + 0.2 * room['floor']
+                    
+                    # Température affectée par l'action HVAC si disponible
+                    if 'hvac_action' in last_row:
+                        base_temp = 22 + (room_id % 5 - 2)
+                        temp_change = last_row['hvac_action'] * floor_factor * 3
+                        temp = base_temp + temp_change
+                        temps.append(min(28, max(18, temp)))
+                    else:
+                        temps.append(room['temperature'])  # Utiliser valeur existante
+                    
+                    # Éclairage affecté par l'action d'éclairage si disponible
+                    if 'lighting_action' in last_row:
+                        base_light = 500 + (room_id % 5 - 2) * 20
+                        light_change = last_row['lighting_action'] * 200 * floor_factor
+                        light = base_light + light_change
+                        lights.append(min(700, max(300, light)))
+                    else:
+                        lights.append(room['light_level'])  # Utiliser valeur existante
+                    
+                    # Occupation: utiliser données réelles si disponibles
+                    if has_occupancy_data and len(last_row['occupancy']) > room_id:
+                        occ = last_row['occupancy'][room_id]
+                    else:
+                        # Simuler occupation variable
+                        hour_est = datetime.now().hour
+                        is_working_hours = (hour_est >= 8 and hour_est <= 18)
+                        is_weekend = datetime.now().weekday() >= 5
+                        prob_occupied = 0.7 if (is_working_hours and not is_weekend) else 0.1
+                        occ = 1 if (np.random.random() < prob_occupied) else 0
+                    occs.append(occ)
+                
+                # Mettre à jour l'état du bâtiment avec ces nouvelles valeurs
+                from building_3d_vis import update_building_state
+                modified_building = update_building_state(modified_building, temps, lights, occs)
             
-            # Afficher les métriques
+            # Calculer les statistiques à partir du bâtiment modifié
+            temp_avg = np.mean([room['temperature'] for room in modified_building['rooms']])
+            light_avg = np.mean([room['light_level'] for room in modified_building['rooms']])
+            occupied_count = sum([1 for room in modified_building['rooms'] if room.get('occupied', 0) == 1])
+            
+            # Afficher les métriques avec le bâtiment mis à jour
             st.metric("Température moyenne", f"{temp_avg:.1f} °C")
             st.metric("Éclairage moyen", f"{light_avg:.0f} lux")
-            st.metric("Taux d'occupation", f"{occupied_count}/{len(building_model['rooms'])} pièces")
+            st.metric("Taux d'occupation", f"{occupied_count}/{len(modified_building['rooms'])} pièces")
             
             # Décisions de l'agent
             st.markdown("#### Décisions de l'agent PPO")
@@ -1021,7 +1126,7 @@ else:
            - Recommandation: 30-100 pour des résultats significatifs
         """)
     
-    # Add code explanation section
+    # Ajouter une section d'explication du code
     st.header("Structure du Code et Implémentation")
     
     code_tab1, code_tab2, code_tab3 = st.tabs(["Architecture Globale", "Environnement RL", "Agent PPO"])
