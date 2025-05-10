@@ -26,34 +26,34 @@ from building_3d_vis import (
     update_building_state
 )
 
-# Set page configuration
+# Configurer la page
 st.set_page_config(
     page_title="Optimisation Énergétique des Bâtiments Intelligents",
     page_icon="🏢",
     layout="wide"
 )
 
-# Main title
+# Titre principal
 st.title("🏢 Système d'Optimisation Énergétique pour Bâtiments Intelligents")
 st.markdown("### Utilisation de l'Apprentissage par Renforcement PPO pour Équilibrer Énergie et Confort")
 
 # Sidebar
 st.sidebar.title("Configuration")
 
-# Create two main tabs in the sidebar
+# Créer deux onglets principaux dans la barre latérale
 sidebar_tab1, sidebar_tab2 = st.sidebar.tabs(["Optimisation", "Documentation"])
 
 with sidebar_tab1:
-    # Data loading section
+    # Section de chargement des données
     st.header("1. Source de Données")
     data_source = st.radio(
         "Sélectionnez une source de données:",
         ["Données Échantillon", "Données Bâtiment Personnalisées", "Télécharger Données"]
     )
 
-# Function to display the documentation content
+# Fonction pour afficher le contenu de la documentation
 def show_documentation():
-    # Application information
+    # Informations sur l'application
     st.header("À propos de cette Application")
     st.write("""
     Cette application utilise l'Optimisation par Politique Proximale (PPO), un algorithme d'apprentissage par renforcement de pointe, 
@@ -72,10 +72,10 @@ def show_documentation():
     4. Examinez les résultats montrant les économies d'énergie et les mesures de confort
     """)
     
-    # Theoretical explanation section
+    # Section d'explication théorique
     st.header("Fondements Théoriques de l'Apprentissage par Renforcement")
     
-    # RL Basics Tab
+    # Onglet Bases de l'Apprentissage par Renforcement
     tab1, tab2, tab3, tab4 = st.tabs(["Concepts de Base", "Modélisation de l'Environnement", "Algorithme PPO", "Hyperparamètres"])
     
     with tab1:
@@ -264,7 +264,7 @@ def show_documentation():
            - Recommandation: 30-100 pour des résultats significatifs
         """)
     
-    # Add code explanation section
+    # Ajouter une section d'explication du code
     st.header("Structure du Code et Implémentation")
     
     code_tab1, code_tab2, code_tab3 = st.tabs(["Architecture Globale", "Environnement RL", "Agent PPO"])
@@ -427,14 +427,14 @@ class PPOAgent:
     
     """)
 
-# Handle documentation tab
+# Gérer l'onglet de documentation
 with sidebar_tab2:
     st.write("Documentation complète sur l'apprentissage par renforcement.")
     if st.button("Afficher la Documentation"):
         # Create a flag in session state to show documentation
         st.session_state['show_docs'] = True
 
-# Load data
+# Charger les données
 if data_source == "Données Échantillon":
     data_path = "data/sample_data.csv"
     df = load_data(data_path)
@@ -452,22 +452,22 @@ else:
         st.warning("Veuillez télécharger un fichier de données pour continuer.")
         df = None
 
-# Initialize show_docs in session state if it doesn't exist
+# Initialiser show_docs dans l'état de session s'il n'existe pas
 if 'show_docs' not in st.session_state:
     st.session_state['show_docs'] = False
 
-# Main content
+# Contenu principal
 if st.session_state.get('show_docs', False):
-    # Display documentation when the flag is set
+    # Afficher la documentation lorsque le drapeau est activé
     show_documentation()
     
-    # Add button to return to main content
+    # Ajouter un bouton pour revenir au contenu principal
     if st.button("Retour à l'Application"):
         st.session_state['show_docs'] = False
         st.rerun()
         
 elif df is not None:
-    # Display data info
+    # Afficher les informations sur les données
     st.header("1. Aperçu des Données")
     
     col1, col2 = st.columns(2)
@@ -480,17 +480,17 @@ elif df is not None:
         st.write("Statistiques des Données:")
         st.dataframe(df.describe())
     
-    # Data preprocessing
+    # Prétraitement des données
     st.header("2. Prétraitement des Données")
     processed_df = preprocess_data(df)
     st.success("Données prétraitées avec succès!")
     
-    # Display original energy consumption
+    # Afficher la consommation d'énergie originale
     st.header("3. Modèles Actuels de Consommation d'Énergie")
     fig = plot_energy_consumption(processed_df)
     st.plotly_chart(fig, use_container_width=True)
     
-    # Training configuration
+    # Configuration de l'entraînement
     st.header("4. Configuration de l'Optimisation")
     
     col1, col2 = st.columns(2)
@@ -525,11 +525,11 @@ elif df is not None:
             help="Taille du batch pour l'entraînement"
         )
     
-    # Training section
+    # Section d'entraînement
     st.header("5. Lancer l'Optimisation")
     
     if st.button("Démarrer l'Entraînement d'Optimisation", key="train"):
-        # Create environment
+        # Créer l'environnement
         env_config = {
             "data": processed_df,
             "comfort_weight": comfort_weight,
@@ -539,7 +539,7 @@ elif df is not None:
         
         env = SmartBuildingEnv(env_config)
         
-        # Create agent
+        # Créer l'agent
         agent_config = {
             "state_dim": env.observation_space.shape[0],
             "action_dim": env.action_space.shape[0],
@@ -549,44 +549,44 @@ elif df is not None:
         
         agent = PPOAgent(agent_config)
         
-        # Training progress placeholder
+        # Espace réservé pour la progression de l'entraînement
         progress_bar = st.progress(0)
         training_metrics_container = st.empty()
         training_plot_container = st.empty()
         
-        # Train the agent
+        # Entraîner l'agent
         progress = {"epochs": [], "rewards": [], "energy_saved": [], "comfort_score": []}
         
         for i in range(epochs):
-            # Training step
+            # Étape d'entraînement
             metrics = train_ppo(env, agent, epochs=1)
             
-            # Update progress
+            # Mettre à jour la progression
             progress["epochs"].append(i+1)
             progress["rewards"].append(metrics["avg_reward"])
             progress["energy_saved"].append(metrics["energy_saved"])
             progress["comfort_score"].append(metrics["comfort_score"])
             
-            # Update UI
+            # Mettre à jour l'interface utilisateur
             progress_bar.progress((i+1)/epochs)
             
-            # Show current metrics
+            # Afficher les métriques actuelles
             training_metrics_container.write(f"Époque {i+1}/{epochs} - "
                                             f"Récompense Moy: {metrics['avg_reward']:.4f}, "
                                             f"Énergie Économisée: {metrics['energy_saved']:.2f}%, "
                                             f"Score de Confort: {metrics['comfort_score']:.2f}%")
             
-            # Plot training progress
+            # Tracer la progression de l'entraînement
             if (i+1) % 5 == 0 or i == epochs-1:
                 fig = plot_training_progress(progress)
                 training_plot_container.plotly_chart(fig, use_container_width=True)
         
         st.success(f"Optimisation terminée en {epochs} époques!")
         
-        # Results section
+        # Section des résultats
         st.header("6. Résultats de l'Optimisation")
         
-        # Run optimized policy
+        # Exécuter la politique optimisée
         env.reset()
         done = False
         optimized_data = []
@@ -598,13 +598,13 @@ elif df is not None:
                 next_state, reward, done, info = env.step(action)
                 optimized_data.append(info)
         
-        # Convert to dataframe
+        # Convertir en DataFrame
         optimized_df = pd.DataFrame(optimized_data)
         
-        # Calculate metrics
+        # Calculer les métriques
         metrics = calculate_metrics(processed_df, optimized_df)
         
-        # Display metrics
+        # Afficher les métriques
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -616,22 +616,22 @@ elif df is not None:
         with col3:
             st.metric("Réduction des Coûts", f"{metrics['cost_saved']:.2f}€", "↓ Bon")
         
-        # Plot comparison
+        # Tracer la comparaison
         st.subheader("Consommation d'Énergie: Avant vs Après Optimisation")
         fig = plot_optimization_comparison(processed_df, optimized_df)
         st.plotly_chart(fig, use_container_width=True)
         
-        # Plot comfort metrics
+        # Tracer les métriques de confort
         st.subheader("Métriques de Confort")
         fig = plot_comfort_metrics(processed_df, optimized_df)
         st.plotly_chart(fig, use_container_width=True)
         
-        # Plot control actions
+        # Tracer les actions de contrôle
         st.subheader("Actions de Contrôle Optimisées")
         fig = plot_control_actions(optimized_df)
         st.plotly_chart(fig, use_container_width=True)
         
-        # 3D Building Visualization
+        # Visualisation 3D du Bâtiment
         st.header("Visualisation 3D du Bâtiment Intelligent")
         st.write("""
         Cette visualisation 3D montre comment les actions de l'agent affectent les différentes pièces du bâtiment.
@@ -650,6 +650,7 @@ elif df is not None:
             building_type = st.selectbox("Type de bâtiment", ["bureau", "résidentiel", "commercial", "industriel"])
         
         # Créer le modèle du bâtiment
+        # Cette section initialise le modèle 3D du bâtiment en fonction des paramètres définis
         building_model = create_building_model(num_floors=num_floors, num_rooms_per_floor=num_rooms, building_type=building_type)
         
         # Afficher le modèle initial
@@ -804,10 +805,10 @@ elif df is not None:
         - Réduire l'utilisation du CVC pendant les périodes d'inoccupation tout en maintenant la préparation du système
         """)
 else:
-    # Display placeholder when no data is loaded
+    # Afficher un espace réservé lorsque aucune donnée n'est chargée
     st.info("Veuillez sélectionner ou télécharger des données pour démarrer le processus d'optimisation.")
     
-    # Show application information
+    # Afficher les informations sur l'application
     st.header("À propos de cette Application")
     st.write("""
     Cette application utilise l'Optimisation par Politique Proximale (PPO), un algorithme d'apprentissage par renforcement de pointe, 
@@ -828,10 +829,10 @@ else:
     Commencez en sélectionnant une source de données dans la barre latérale!
     """)
     
-    # Add theoretical explanation section
+    # Ajouter une section d'explication théorique
     st.header("Fondements Théoriques de l'Apprentissage par Renforcement")
     
-    # RL Basics Tab
+    # Onglet Bases de l'Apprentissage par Renforcement
     tab1, tab2, tab3, tab4 = st.tabs(["Concepts de Base", "Modélisation de l'Environnement", "Algorithme PPO", "Hyperparamètres"])
     
     with tab1:
