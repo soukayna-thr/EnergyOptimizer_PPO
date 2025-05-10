@@ -41,8 +41,8 @@ L'application comprend:
 
 1. Clonez ce dépôt:
 ```bash
-git clone https://github.com/votreusername/optibatiment.git
-cd optibatiment
+git clone https://github.com/soukayna-thr/EnergyOptimizer_PPO
+cd EnergyOptimizer_PPO
 ```
 
 2. Installez les dépendances:
@@ -111,7 +111,7 @@ Les contributions sont les bienvenues! Pour contribuer:
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE.md](LICENSE.md) pour plus de détails.
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 
 ---
