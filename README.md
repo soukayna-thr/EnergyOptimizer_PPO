@@ -3,7 +3,6 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Licence](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow.svg)
-[![EnergyOptimizer](https://img.shields.io/badge/Academia-EnergyOptimizer-blue)](https://www.academia.edu/129328210/Explication_compl%C3%A8te_du_projet_EnergyOptimizer)
 
 
 ## 📋 Description
