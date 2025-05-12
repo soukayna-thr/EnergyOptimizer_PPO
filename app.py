@@ -854,7 +854,6 @@ elif df is not None:
             # Afficher les métriques avec le bâtiment mis à jour
             st.metric("Température moyenne", f"{temp_avg:.1f} °C")
             st.metric("Éclairage moyen", f"{light_avg:.0f} lux")
-            st.metric("Taux d'occupation", f"{occupied_count}/{len(modified_building['rooms'])} pièces")
             
             # Décisions de l'agent
             st.markdown("#### Décisions de l'agent PPO")
