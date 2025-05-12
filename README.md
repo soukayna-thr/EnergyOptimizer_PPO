@@ -4,6 +4,7 @@
 ![Licence](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-yellow.svg)
 
+
 ## 📋 Description
 
 EnergyOptimizer est un système avancé d'optimisation énergétique pour bâtiments intelligents qui utilise l'algorithme d'apprentissage par renforcement PPO (Proximal Policy Optimization). Cette solution permet de réduire la consommation d'énergie tout en maintenant un niveau optimal de confort pour les occupants.
