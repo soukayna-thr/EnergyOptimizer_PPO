@@ -25,7 +25,6 @@ Le système analyse en temps réel les données du bâtiment (température, écl
 L'application comprend:
 - Visualisation 3D du bâtiment intelligent
 - Graphiques d'analyse de consommation énergétique
-- Tableau de bord de suivi des économies réalisées
 - Interface de configuration des paramètres d'optimisation
 
 ## ⚙️ Prérequis
