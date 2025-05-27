@@ -17,11 +17,13 @@
 
 ## 1. Description
 
-EnergyOptimizer est un système avancé d'optimisation énergétique pour bâtiments intelligents qui utilise l'algorithme d'apprentissage par renforcement PPO (Proximal Policy Optimization). Cette solution permet de réduire la consommation d'énergie tout en maintenant un niveau optimal de confort pour les occupants.
+[EnergyOptimizer](https://github.com/soukayna-thr/EnergyOptimizer_PPO) est un système avancé d'optimisation énergétique pour bâtiments intelligents qui utilise l'algorithme d'apprentissage par renforcement PPO (Proximal Policy Optimization). Cette solution permet de réduire la consommation d'énergie tout en maintenant un niveau optimal de confort pour les occupants.
 
 Le système analyse en temps réel les données du bâtiment (température, éclairage, occupation) et prend des décisions intelligentes pour ajuster les systèmes HVAC (chauffage, ventilation, climatisation) et d'éclairage de manière optimale.
 
 ## 2. Fonctionnalités
+Concrètement, qu’est-ce que le projet sait faire ? Voici le détail :
+
 
 - **Optimisation énergétique avancée** utilisant l'algorithme PPO
 - **Équilibre automatique** entre économie d'énergie et confort des occupants
@@ -31,6 +33,7 @@ Le système analyse en temps réel les données du bâtiment (température, écl
 - **Simulation réaliste** des effets des décisions d'optimisation
 
 ## 3. Structure du projet
+Le projet est structuré comme suit :
 - **app.py**: Application Streamlit principale et interface utilisateur
 - **energy_env.py**: Environnement Gym pour la simulation du bâtiment intelligent
 - **ppo_agent.py**: Implémentation de l'agent d'apprentissage par renforcement PPO
@@ -44,7 +47,7 @@ Voir le fichier : [Document explicatif](Document/DocumentExplicatif.pdf)
 
 
 ## 4. Installation
-
+Voici comment cloner le dépôt, installer les dépendances et lancer l'application en quelques commandes :
 1. Clonez ce dépôt:
 ```bash
 git clone https://github.com/soukayna-thr/EnergyOptimizer_PPO
@@ -94,7 +97,7 @@ Le système modélise:
 Dans nos tests typiques, le système a démontré:
 - Réduction de consommation énergétique: 15-30%
 - Maintien du confort des occupants: >85%
-- Economie des couts environ 5-11$
+- Economie des couts environ 4-11$
 
 ## 8. Captures d'écran
 
@@ -104,26 +107,26 @@ L'application comprend:
 - Interface de configuration des paramètres d'optimisation
 
 <p float="left">
-  <img src="Captures/1.png" width="500" />
-  <img src="Captures/2.png" width="500" />
+  <img src="Captures/1.png" width="1000" />
+  <img src="Captures/2.png" width="1000" />
 </p>
 
 <p float="left">
-  <img src="Captures/3.png" width="500" />
-  <img src="Captures/4.png" width="500" />
+  <img src="Captures/3.png" width="1000" />
+  <img src="Captures/4.png" width="1000" />
 </p>
 <p float="left">
-  <img src="Captures/5.png" width="500" />
+  <img src="Captures/5.png" width="1000" />
 </p>
 <p float="left">
-  <img src="Captures/6.png" width="500" />
-  <img src="Captures/7.png" width="500" />
-  <img src="Captures/8.png" width="500" />
+  <img src="Captures/6.png" width="1000" />
+  <img src="Captures/7.png" width=10500" />
+  <img src="Captures/8.png" width="1000" />
   
-  <img src="Captures/9.png" width="500" />
+  <img src="Captures/9.png" width="1000" />
 </p>
 <p float="left">
-  <img src="Captures/10.png" width="500" />
+  <img src="Captures/10.png" width="1000" />
 </p>
 
 
