@@ -39,7 +39,7 @@ Le système analyse en temps réel les données du bâtiment (température, écl
 - **training.py**: Fonctions d'entraînement de l'agent
 - **visualization.py**: Fonctions de visualisation des résultats
   
-Voir le fichier : [Document explicatif](./DocumentExplicatif.pdf)
+Voir le fichier : [Document explicatif](Document/DocumentExplicatif.pdf)
 
 
 
