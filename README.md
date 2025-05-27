@@ -141,4 +141,4 @@ Les contributions sont les bienvenues! Pour contribuer:
 
 Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=78d4f2&height=120&section=footer&text=D%C3%A9velopp%C3%A9%20avec%20%E2%9D%A4%EF%B8%8F%20pour%20un%20avenir%20%C3%A9nerg%C3%A9tique%20plus%20efficace.&fontSize=18&fontColor=000000&fontAlign=50)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=78d4f2&height=120&section=footer&text=Développé+avec+%E2%9D%A4%EF%B8%8F+pour+un+avenir+énergétique+plus+efficace.&fontSize=18&fontColor=000000&fontAlignY=70)
