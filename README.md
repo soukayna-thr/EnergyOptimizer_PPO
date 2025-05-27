@@ -1,4 +1,6 @@
-# EnergyOptimizer : Optimisation Énergétique par Apprentissage par Renforcement
+![header](https://capsule-render.vercel.app/api?type=waving&color=78d4f2&height=200&section=header&text=EnergyOptimizer&fontSize=45&fontAlignY=35&animation=twinkling&fontColor=000000&desc=Optimisation%20%C3%89nerg%C3%A9tique%20par%20Apprentissage%20par%20Renforcement&descAlignY=65&descAlign=50&width=1200)
+
+
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Licence](https://img.shields.io/badge/license-MIT-green.svg)
@@ -25,7 +27,6 @@ Le système analyse en temps réel les données du bâtiment (température, écl
 L'application comprend:
 - Visualisation 3D du bâtiment intelligent
 - Graphiques d'analyse de consommation énergétique
-- Tableau de bord de suivi des économies réalisées
 - Interface de configuration des paramètres d'optimisation
 
 ## ⚙️ Prérequis
@@ -114,9 +115,4 @@ Les contributions sont les bienvenues! Pour contribuer:
 
 Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-
----
-
-Développé avec ❤️ pour un avenir énergétique plus efficace. 
-
-Par : Soukayna & Chayma & Younes
+![footer](https://capsule-render.vercel.app/api?type=waving&color=78d4f2&height=120&section=footer&text=D%C3%A9velopp%C3%A9%20avec%20%E2%9D%A4%EF%B8%8F%20pour%20un%20avenir%20%C3%A9nerg%C3%A9tique%20plus%20efficace.&fontSize=18&fontColor=000000&fontAlign=50)
